@@ -1,7 +1,7 @@
 $(function () {
   var datasets = {
-    usa: {
-      label: "USA",
+    Drought: {
+      label: "Drought",
       data: [
         [1988, 483994],
         [1989, 479060],
@@ -24,8 +24,8 @@ $(function () {
         [2006, 528692],
       ],
     },
-    russia: {
-      label: "Russia",
+    Floot: {
+      label: "Floot",
       data: [
         [1988, 218000],
         [1989, 203000],
@@ -47,8 +47,8 @@ $(function () {
         [2006, 34700],
       ],
     },
-    uk: {
-      label: "UK",
+    Fire: {
+      label: "Fire",
       data: [
         [1988, 62982],
         [1989, 62027],
@@ -71,8 +71,8 @@ $(function () {
         [2006, 59213],
       ],
     },
-    germany: {
-      label: "Germany",
+    Bush_Fire: {
+      label: "Bush_Fire",
       data: [
         [1988, 55627],
         [1989, 55475],
@@ -95,8 +95,8 @@ $(function () {
         [2006, 36984],
       ],
     },
-    denmark: {
-      label: "Denmark",
+    COVID: {
+      label: "COVID",
       data: [
         [1988, 3813],
         [1989, 3719],
@@ -119,8 +119,8 @@ $(function () {
         [2006, 3770],
       ],
     },
-    sweden: {
-      label: "Sweden",
+    Maleria: {
+      label: "Maleria",
       data: [
         [1988, 6402],
         [1989, 6474],
@@ -143,8 +143,8 @@ $(function () {
         [2006, 5271],
       ],
     },
-    norway: {
-      label: "Norway",
+    Animal_Disease: {
+      label: "Animal_Disease",
       data: [
         [1988, 4382],
         [1989, 4498],
@@ -169,7 +169,7 @@ $(function () {
     },
   };
   /* var dataSet = [
-    {label: "USA", color: "#005CDE" },
+    {label: "Drought", color: "#005CDE" },
     {label: "Russia", color: "#005CDE" },
     { label: "UK", color: "#00A36A" },
     { label: "Germany", color: "#7D0096" },

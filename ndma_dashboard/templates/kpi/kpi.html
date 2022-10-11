@@ -26,7 +26,7 @@
 <figure class="highcharts-figure">
   <div id="container"></div>
   <p class="highcharts-description">
-    Heatmap showing employee data per weekday. Heatmaps are commonly used to
+    Heatmap showing KPIs data recorded in the last five years. Heatmaps are commonly used to
     visualize hot spots within data sets, and to show patterns or correlations.
     Due to their compact nature, they are often used with large sets of data.
   </p>
@@ -92,7 +92,7 @@ Highcharts.chart('container', {
 
   tooltip: {
     formatter: function () {
-      return '<b>' + getPointCategoryName(this.point, 'x') + '</b> sold <br><b>' +
+      return '<b>' + getPointCategoryName(this.point, 'x') + '</b> recorded <br><b>' +
         this.point.value + '</b> items on <br><b>' + getPointCategoryName(this.point, 'y') + '</b>';
     }
   },

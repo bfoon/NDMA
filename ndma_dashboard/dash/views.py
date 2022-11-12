@@ -29,17 +29,17 @@ def disaster_map(request):
         train_group.add_child(folium.Marker(tuple_, icon=icon))
         car_group.add_child(folium.Marker(tuple_, icon=icon1))
 
-
-    html = '''1st line<br>
-    2nd line<br>
-    3rd line'''
-
-    iframe = folium.IFrame(html,
-                           width=100,
-                           height=100)
-
-    popup = folium.Popup(iframe,
-                         max_width=100)
+    #
+    # html = '''1st line<br>
+    # 2nd line<br>
+    # 3rd line'''
+    #
+    # iframe = folium.IFrame(html,
+    #                        width=100,
+    #                        height=100)
+    #
+    # popup = folium.Popup(iframe,
+    #                      max_width=100)
 
     folium.LayerControl().add_to(map)
     # folium.Marker([name.lat, name.lng],

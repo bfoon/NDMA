@@ -1,6 +1,6 @@
 $(function () {
   var datasets = {
-    Drought: {
+    drought: {
       label: "Drought",
       data: [
         [1988, 483994],
@@ -24,7 +24,7 @@ $(function () {
         [2006, 528692],
       ],
     },
-    Floot: {
+    floot: {
       label: "Floot",
       data: [
         [1988, 218000],
@@ -47,7 +47,7 @@ $(function () {
         [2006, 34700],
       ],
     },
-    Fire: {
+    fire: {
       label: "Fire",
       data: [
         [1988, 62982],
@@ -71,8 +71,8 @@ $(function () {
         [2006, 59213],
       ],
     },
-    Bush_Fire: {
-      label: "Bush_Fire",
+    bush: {
+      label: "Bush Fire",
       data: [
         [1988, 55627],
         [1989, 55475],
@@ -95,7 +95,7 @@ $(function () {
         [2006, 36984],
       ],
     },
-    COVID: {
+    covid: {
       label: "COVID",
       data: [
         [1988, 3813],
@@ -119,7 +119,7 @@ $(function () {
         [2006, 3770],
       ],
     },
-    Maleria: {
+    maleria: {
       label: "Maleria",
       data: [
         [1988, 6402],
@@ -143,8 +143,8 @@ $(function () {
         [2006, 5271],
       ],
     },
-    Animal_Disease: {
-      label: "Animal_Disease",
+    animal: {
+      label: "Animal Disease",
       data: [
         [1988, 4382],
         [1989, 4498],

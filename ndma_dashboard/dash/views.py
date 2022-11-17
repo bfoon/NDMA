@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 import folium
 import geocoder
 from .models import map_data
+import matplotlib.pyplot as plt
 from folium import plugins
+from django_pandas.io import read_frame
 from django.db.models import Count, F, Value, Sum, Q, Count, Max, CASCADE, Min, FloatField, Avg, Func, CharField
 import plotly.express as px
 
@@ -88,7 +90,18 @@ def disaster_map(request):
 
 def kpi_chart(request):
     # Data for the chart
-    kpi_table = map_data.objects.annotate(kpi_count = Count('hazard')).values('kpi_count','region','hazard')
+    kpi_table = map_data.objects.values_list('year','hazard').annotate(kpi_count = Count('hazard'))
+    # df = read_frame(kpi_table)
+    # counts_df = df
+    # fig, ax = plt.subplots(1, 1)
+    # fig.set_size_inches(20, 10)
+    # counts_df.plot(kind='bar', stacked=True, ax=ax, colormap='tab20')
+    # plt.legend(loc='upper center', ncol=5, frameon=True, bbox_to_anchor=(0.5, 1.1), fancybox=True, shadow=True)
+    # ax.spines['right'].set_visible(False)
+    # ax.spines['top'].set_visible(False)
+    # plt.xlabel('Year', size=15)
+    # plt.ylabel('Number of Incidents', size=15)
+    # plt.title('Crime in London (2020)', size=18, y=1.1)
     context = {
         "kpi_table":kpi_table
 

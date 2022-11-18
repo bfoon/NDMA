@@ -124,6 +124,7 @@ def lit_map(request):
 
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig.update_traces(marker={'size': 15})
     gantt_plot = plot(fig, output_type="div")
     context = {
         "lit":gantt_plot

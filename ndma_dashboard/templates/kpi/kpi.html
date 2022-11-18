@@ -1,6 +1,7 @@
 {% include 'base.html' %}
 {% load static %}
 {% block content %}
+
  <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
         <div class="page-breadcrumb">
@@ -63,7 +64,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header float-right">
-        <h5>{{kpi.hazard}} {{kpi.region}}</h5>
+        <h5>{{kpi.hazard}} {{kpi.region}} {{kpi.year}}</h5>
         <div class="text-right">
           <i data-dismiss="modal" aria-label="Close" class="fa fa-close"></i>
         </div>
@@ -73,7 +74,7 @@
 
 
         <div>
-  <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0">
+  <table id="dtBasicExample1{{kpi.max_id}}" class="table table-striped table-bordered table-sm" cellspacing="0">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -89,12 +90,16 @@
       <th scope="row">{{forloop.counter}}</th>
       <td>{{st.settlement}}</td>
       <td>{{st.sett_count}}</td>
-      <td>@samso</td>
+      <td>{{st.date_of_disaster}}</td>
     </tr>
+
   {% endif %}
+
   {% endfor %}
+
   </tbody>
 </table>
+
 
         </div>
 
@@ -102,7 +107,7 @@
       </div>
 
       <div class="modal-footer">
-        <i class="btn btn-primary align-center">Totat {{kpi.kpi_count}}</i>
+        <button type="button" class="btn btn-primary align-center" data-dismiss="modal">Totat {{kpi.kpi_count}}</button>
       </div>
     </div>
   </div>
@@ -111,6 +116,7 @@
 
     </tr>
 </div>
+
 
     {% endfor %}
   </tbody>
@@ -143,5 +149,16 @@
   $('.dataTables_length').addClass('bs-select');
 });
 </script>
+
+  <script>
+   {% for p in kpi_table %}
+   $(document).ready(function () {
+  $('#dtBasicExample1{{p.max_id}}').DataTable();
+  $('.dataTables_length').addClass('bs-select');
+});
+{% endfor %}
+</script>
+
+
 
 {% endblock %}

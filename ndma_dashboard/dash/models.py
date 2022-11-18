@@ -18,8 +18,8 @@ class map_data(models.Model):
     ward = models.CharField(max_length=10000, blank=True, null=True)
     settlement = models.CharField(max_length=10000, blank=True, null=True)
     location = models.CharField(max_length=10000)
-    lat = models.CharField(max_length=10000)
-    lon = models.CharField(max_length=10000)
+    lat = models.CharField(max_length=120)
+    lon = models.CharField(max_length=120)
     alt = models.CharField(max_length=10000)
     geometry = models.CharField(max_length=10000, blank=True, null=True)
 

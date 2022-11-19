@@ -15,7 +15,11 @@ import pandas as pd
 
 def dashboard (request):
     # data display here
-    return render(request, "dash/dash.html")
+    dash = map_data.objects.all()
+    context = {
+        "dash" : dash
+    }
+    return render(request, "dash/dash.html", context)
 
 def disaster_map(request):
     # get Gambia
@@ -43,7 +47,7 @@ def disaster_map(request):
                 location=[lat_, lng_],
                 popup=[label_, settle_],
                 icon=folium.Icon(color='red', icon='info-sign')
-            )).add_to(map_ndam)
+            ))
            # map.add_child(train_group)
         elif label_ == 'Windstorm':
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
@@ -51,7 +55,7 @@ def disaster_map(request):
                 location=[lat_, lng_],
                 popup=[label_, settle_],
                 icon=folium.Icon(color='blue', icon='info-sign')
-            )).add_to(map_ndam)
+            ))
             # map.add_child(train_group)
         elif label_ == 'Domestic Fire':
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
@@ -59,7 +63,7 @@ def disaster_map(request):
                 location=[lat_, lng_],
                 popup=[label_, settle_],
                 icon=folium.Icon(color='cadetblue', icon='info-sign')
-            )).add_to(map_ndam)
+            ))
             # map.add_child(train_group)
         else:
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
@@ -67,7 +71,7 @@ def disaster_map(request):
                 location=[lat_, lng_],
                 popup=[label_, settle_],
                 icon=folium.Icon(color='green', icon='info-sign')
-            )).add_to(map_ndam)
+            ))
 
 
     # for tuple_ in points1:
@@ -90,8 +94,7 @@ def disaster_map(request):
 
     folium.LayerControl().add_to(map_ndam)
 
-    # folium.Marker([name.lat, name.lng],
-    #                        popup=popup).add_to(map)
+    # folium.Marker([data[0][0], data[0][1]]).add_to(map_ndam)
 
     maps_ndam = map_ndam._repr_html_()
     return render(request, "dash/map.html", {"map":maps_ndam})
@@ -124,10 +127,13 @@ def lit_map(request):
 
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    fig.update_traces(marker={'size': 15})
+    fig.update_traces(marker={'size': 15}, selector=dict(mode='markers'))
     gantt_plot = plot(fig, output_type="div")
     context = {
         "lit":gantt_plot
 
     }
     return render(request, "dash/lit_map.html", context)
+
+def kpi_charts(request):
+    return render(request, "dash/kpi_chart.html")

@@ -16,8 +16,18 @@ import pandas as pd
 def dashboard (request):
     # data display here
     dash = map_data.objects.all()
+    female = dash.filter(gender="Female")
+    male = dash.filter(gender="Male")
+    kpi = dash.values('hazard').annotate(kpi=Count("hazard"))
+    district = dash.values('district').annotate(dist=Count("district"))
+    region = dash.values('region').annotate(reg=Count("region"))
     context = {
-        "dash" : dash
+        "dash" : dash,
+        "male" : male,
+        "kpi" : kpi,
+        "district" : district,
+        "region" : region,
+        "female" : female
     }
     return render(request, "dash/dash.html", context)
 
@@ -27,7 +37,7 @@ def disaster_map(request):
     # name2 = geocoder.osm('Banjul')
     # name3 = geocoder.osm('Bansang')
     today = datetime.now()
-    data_map = map_data.objects.all().filter( year=today.year)
+    data_map = map_data.objects.all().filter(year=today.year)
     # Map data by folium
     data = data_map.values_list('lat', 'lon')
     map_ndam = folium.Map(location=data[0], zoom_start=8.5, control_scale=True)
@@ -109,7 +119,8 @@ def lit_map(request):
         'lat': float(x.lat),
         'lon': float(x.lon),
         'settlement': x.settlement,
-        'hazard': x.hazard
+        'hazard': x.hazard,
+        'year': x.year
     } for x in temp
     ]
     df = pd.DataFrame(mpdata)
@@ -117,7 +128,7 @@ def lit_map(request):
                             lat="lat",
                             lon="lon",
                             hover_name="settlement",
-                            hover_data=['hazard'],
+                            hover_data=['hazard','year'],
                             color="hazard",
                             color_continuous_scale=color_scale,
                             # size=df[["lat", "lon", "settlement","hazard"]].value_counts(),
@@ -127,7 +138,7 @@ def lit_map(request):
 
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-    fig.update_traces(marker={'size': 15}, selector=dict(mode='markers'))
+    fig.update_traces(marker={'size': 15}, selector=dict(mode="markers"))
     gantt_plot = plot(fig, output_type="div")
     context = {
         "lit":gantt_plot

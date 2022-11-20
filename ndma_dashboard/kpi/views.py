@@ -11,7 +11,7 @@ def kpi(request):
     today = datetime.now()
     kpi_table = (map_data.objects.values('year','hazard','region','district').annotate(kpi_count=Count('hazard'), settle_count = Count('settlement'), max_id = Max('id')).filter(year=today.year).order_by('-year','region', 'district','-kpi_count'))
     settle_list = map_data.objects.values('year','hazard','district','settlement','date_of_disaster').annotate(
-        sett_count=Count('settlement')).filter(year=today.year).order_by('-sett_count')
+        sett_count=Count('settlement')).filter(year=today.year).order_by('settlement','-sett_count')
     # settle_list = Paginator(set1, per_page=10)
 
     context = {

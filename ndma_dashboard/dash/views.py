@@ -10,6 +10,7 @@ from django.db.models import Count, F, Value, Sum, Q, Count, Max, CASCADE, Min, 
 import plotly.express as px
 from plotly.offline import plot
 import pandas as pd
+import plotly.graph_objects as go
 
 # Create your views here.
 
@@ -44,7 +45,13 @@ def disaster_map(request):
 
     plugins.HeatMap(data).add_to(map_ndam)
     points1 = data
-
+    # mpdata = [
+    #     {
+    #         'settlement': x.settlement,
+    #         'hazard': x.hazard,
+    #         'year': x.year
+    #     } for x in data_map
+    # ]
     # incidents_accident = folium.map.FeatureGroup()
     # car_group = folium.FeatureGroup(name="Car Accident").add_to(map)
     for lat_, lng_, label_, settle_ in data_map.all().values_list('lat', 'lon','hazard', 'settlement'):
@@ -55,33 +62,33 @@ def disaster_map(request):
            train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
            train_group.add_child(folium.Marker(
                 location=[lat_, lng_],
-                popup=[label_, settle_],
+                popup=[label_,settle_],
                 icon=folium.Icon(color='red', icon='info-sign')
-            ))
+            )).add_to(map_ndam)
            # map.add_child(train_group)
         elif label_ == 'Windstorm':
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
             train_group.add_child(folium.Marker(
                 location=[lat_, lng_],
-                popup=[label_, settle_],
+                popup=[label_,settle_],
                 icon=folium.Icon(color='blue', icon='info-sign')
-            ))
+            )).add_to(map_ndam)
             # map.add_child(train_group)
         elif label_ == 'Domestic Fire':
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
             train_group.add_child(folium.Marker(
                 location=[lat_, lng_],
-                popup=[label_, settle_],
+                popup=[label_,settle_],
                 icon=folium.Icon(color='cadetblue', icon='info-sign')
-            ))
+            )).add_to(map_ndam)
             # map.add_child(train_group)
         else:
             train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
             train_group.add_child(folium.Marker(
                 location=[lat_, lng_],
-                popup=[label_, settle_],
+                popup=[label_,settle_],
                 icon=folium.Icon(color='green', icon='info-sign')
-            ))
+            )).add_to(map_ndam)
 
 
     # for tuple_ in points1:
@@ -147,4 +154,50 @@ def lit_map(request):
     return render(request, "dash/lit_map.html", context)
 
 def kpi_charts(request):
-    return render(request, "dash/kpi_chart.html")
+    temp = (map_data.objects.annotate(gen_count = Count('gender'))).\
+        values('gender', 'year','gen_count')
+
+    df = pd.DataFrame(temp)
+    fig = px.histogram(df, x='year', y='gen_count',
+                       color='gender', barmode='group',
+                       histfunc='count',
+                       height=400)
+    fig.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+    # fig['layout']['yaxis'].update(autorange=True)
+    bar_plot = plot(fig, output_type="div")
+
+    temp1 = (map_data.objects.annotate(gen_count=Count('region'))). \
+        values('region', 'year', 'gen_count', 'hazard')
+
+    df1 = pd.DataFrame(temp1)
+    fig1 = px.histogram(df1, x='year', y='gen_count',
+                       color='region', barmode='group',
+                       histfunc='count',
+                       height=400)
+    fig1.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+    # fig1['layout']['yaxis'].update(autorange=True)
+    bar_plot1 = plot(fig1, output_type="div")
+
+    temp2 = (map_data.objects.values('region', 'hazard').annotate(haz_count=Count('hazard')))
+
+    df2 = pd.DataFrame(temp2)
+    fig2 = px.bar(df2, x="region", y="haz_count", color="hazard", text_auto=True)
+    fig2.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+    # fig2['layout']['yaxis'].update(autorange=True)
+    bar_plot2 = plot(fig2, output_type="div")
+
+    df3 = px.data.gapminder()
+    fig3 = px.scatter(df3, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
+               size="pop", color="continent", hover_name="country",
+               log_x=True, size_max=55, range_x=[100, 100000], range_y=[25, 90])
+    fig3.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+    # fig2['layout']['yaxis'].update(autorange=True)
+    bar_plot3 = plot(fig3, output_type="div")
+
+    context = {
+        'bar_plot':bar_plot,
+        'bar_plot1':bar_plot1,
+        'bar_plot2':bar_plot2,
+        'bar_plot3':bar_plot3
+    }
+    return render(request, "dash/kpi_chart.html",context)

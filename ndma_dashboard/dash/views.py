@@ -10,13 +10,14 @@ from django.db.models import Count, F, Value, Sum, Q, Count, Max, CASCADE, Min, 
 import plotly.express as px
 from plotly.offline import plot
 import pandas as pd
-import plotly.graph_objects as go
+# import plotly.graph_objects as go
 
 # Create your views here.
 
 def dashboard (request):
     # data display here
     dash = map_data.objects.all()
+    kip_count =  dash.values('hazard').annotate(kcount = Count('hazard'))
     female = dash.filter(gender="Female")
     male = dash.filter(gender="Male")
     kpi = dash.values('hazard').annotate(kpi=Count("hazard"))
@@ -24,6 +25,7 @@ def dashboard (request):
     region = dash.values('region').annotate(reg=Count("region"))
     context = {
         "dash" : dash,
+        "kip_count" : kip_count,
         "male" : male,
         "kpi" : kpi,
         "district" : district,
@@ -44,7 +46,7 @@ def disaster_map(request):
     map_ndam = folium.Map(location=data[0], zoom_start=8.5, control_scale=True)
 
     plugins.HeatMap(data).add_to(map_ndam)
-    points1 = data
+    # points1 = data
     # mpdata = [
     #     {
     #         'settlement': x.settlement,
@@ -54,41 +56,41 @@ def disaster_map(request):
     # ]
     # incidents_accident = folium.map.FeatureGroup()
     # car_group = folium.FeatureGroup(name="Car Accident").add_to(map)
-    for lat_, lng_, label_, settle_ in data_map.all().values_list('lat', 'lon','hazard', 'settlement'):
-
-
-
-        if label_ == 'Flashflood':
-           train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
-           train_group.add_child(folium.Marker(
-                location=[lat_, lng_],
-                popup=[label_,settle_],
-                icon=folium.Icon(color='red', icon='info-sign')
-            )).add_to(map_ndam)
-           # map.add_child(train_group)
-        elif label_ == 'Windstorm':
-            train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
-            train_group.add_child(folium.Marker(
-                location=[lat_, lng_],
-                popup=[label_,settle_],
-                icon=folium.Icon(color='blue', icon='info-sign')
-            )).add_to(map_ndam)
-            # map.add_child(train_group)
-        elif label_ == 'Domestic Fire':
-            train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
-            train_group.add_child(folium.Marker(
-                location=[lat_, lng_],
-                popup=[label_,settle_],
-                icon=folium.Icon(color='cadetblue', icon='info-sign')
-            )).add_to(map_ndam)
-            # map.add_child(train_group)
-        else:
-            train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
-            train_group.add_child(folium.Marker(
-                location=[lat_, lng_],
-                popup=[label_,settle_],
-                icon=folium.Icon(color='green', icon='info-sign')
-            )).add_to(map_ndam)
+    # for lat_, lng_, label_, settle_ in data_map.all().values_list('lat', 'lon','hazard', 'settlement'):
+    #
+    #
+    #
+    #     if label_ == 'Flashflood':
+    #        train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
+    #        train_group.add_child(folium.Marker(
+    #             location=[lat_, lng_],
+    #             popup=[label_,settle_],
+    #             icon=folium.Icon(color='red', icon='info-sign')
+    #         )).add_to(map_ndam)
+    #        # map.add_child(train_group)
+    #     elif label_ == 'Windstorm':
+    #         train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
+    #         train_group.add_child(folium.Marker(
+    #             location=[lat_, lng_],
+    #             popup=[label_,settle_],
+    #             icon=folium.Icon(color='blue', icon='info-sign')
+    #         )).add_to(map_ndam)
+    #         # map.add_child(train_group)
+    #     elif label_ == 'Domestic Fire':
+    #         train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
+    #         train_group.add_child(folium.Marker(
+    #             location=[lat_, lng_],
+    #             popup=[label_,settle_],
+    #             icon=folium.Icon(color='cadetblue', icon='info-sign')
+    #         )).add_to(map_ndam)
+    #         # map.add_child(train_group)
+    #     else:
+    #         train_group = folium.map.FeatureGroup(name=label_).add_to(map_ndam)
+    #         train_group.add_child(folium.Marker(
+    #             location=[lat_, lng_],
+    #             popup=[label_,settle_],
+    #             icon=folium.Icon(color='green', icon='info-sign')
+    #         )).add_to(map_ndam)
 
 
     # for tuple_ in points1:
@@ -186,13 +188,25 @@ def kpi_charts(request):
     # fig2['layout']['yaxis'].update(autorange=True)
     bar_plot2 = plot(fig2, output_type="div")
 
-    df3 = px.data.gapminder()
-    fig3 = px.scatter(df3, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
-               size="pop", color="continent", hover_name="country",
-               log_x=True, size_max=55, range_x=[100, 100000], range_y=[25, 90])
+    # df3 = px.data.gapminder()
+    temp3 = map_data.objects.all()
+    mpdata = [
+        {
+            'region': x.region,
+            'hazard': x.hazard,
+            'year': x.year
+        } for x in temp3
+    ]
+    lst3 = pd.DataFrame(mpdata)
+    df3 = lst3.groupby(["hazard","year"])["hazard"].size().reset_index(name="counts")
+    df3 = df3.sort_values(by=['year'])
+    # df3 = pd.DataFrame(mpdata)
+    fig3 = px.bar(df3, x="year", y="counts", color="hazard", text_auto=True)
     fig3.update_layout(margin=dict(l=20, r=20, t=20, b=20))
+
     # fig2['layout']['yaxis'].update(autorange=True)
     bar_plot3 = plot(fig3, output_type="div")
+    # fig3.show()
 
     context = {
         'bar_plot':bar_plot,

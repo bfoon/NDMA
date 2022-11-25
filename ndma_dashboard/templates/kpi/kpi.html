@@ -60,7 +60,7 @@
       <td>{{kpi.hazard}}</td>
       <td><a href="/kpi/kpi_settlement/{{kpi.max_id}}"class="btn btn-sm bg bg-danger p-2 text-white " data-bs-toggle="modal" data-bs-target="#exampleModal{{kpi.max_id}}"><strong>{{kpi.kpi_count}}</strong></a>
       <!-- Modal -->
-<div class="modal fade" id="exampleModal{{kpi.max_id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{kpi.max_id}}" aria-hidden="true">
+<div class="modal fade" id="exampleModal{{kpi.max_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header float-right">
@@ -70,10 +70,6 @@
         </div>
       </div>
       <div class="modal-body">
-
-
-
-        <div>
   <table id="dtBasicExample1{{kpi.max_id}}" class="table table-striped table-bordered table-sm" cellspacing="0">
   <thead>
     <tr>
@@ -84,13 +80,13 @@
     </tr>
   </thead>
   <tbody>
-  {% for st in settle_list %}
-  {% if st.year == kpi.year and st.district == kpi.district and st.hazard == kpi.hazard %}
+  {% for sl in settle_list %}
+  {% if sl.year == kpi.year and sl.district == kpi.district and sl.hazard == kpi.hazard %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
-      <td>{{st.settlement}}</td>
-      <td>{{st.sett_count}}</td>
-      <td>{{st.date_of_disaster}}</td>
+      <td>{{sl.settlement}}</td>
+      <td>{{sl.sett_count}}</td>
+      <td>{{sl.date_of_disaster}}</td>
     </tr>
 
   {% endif %}
@@ -99,17 +95,11 @@
 
   </tbody>
 </table>
-
-
-        </div>
-
-
-      </div>
-
+  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary align-center" data-dismiss="modal">Totat {{kpi.kpi_count}}</button>
       </div>
-    </div>
+
   </div>
 
       </td>

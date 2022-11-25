@@ -1,6 +1,7 @@
 {% include 'base.html' %}
 {% load static %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
         <div class="page-breadcrumb">
@@ -32,32 +33,53 @@
             <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-cyan text-center">
+                  {% for d in kip_count %}
+                    {% if d.hazard == 'Flashflood' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-view-dashboard"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Dashboard</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
             <!-- Column -->
-            <div class="col-md-6 col-lg-4 col-xlg-3">
+            <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-success text-center">
+                   {% for d in kip_count %}
+                    {% if d.hazard == 'Windstorm' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-chart-areaspline"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Charts</h6>
-                </div>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
+              </div>
               </div>
             </div>
             <!-- Column -->
             <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-warning text-center">
+                   {% for d in kip_count %}
+                    {% if d.hazard == 'Domestic Fire' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-collage"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Widgets</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
@@ -65,10 +87,17 @@
             <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-danger text-center">
+                    {% for d in kip_count %}
+                    {% if d.hazard == 'Riverine Flood' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-border-outside"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Tables</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
@@ -76,10 +105,17 @@
             <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-info text-center">
+                   {% for d in kip_count %}
+                    {% if d.hazard == 'Bush Fire' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-arrow-all"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Full Width</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
@@ -88,10 +124,17 @@
             <div class="col-md-6 col-lg-4 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-danger text-center">
+                    {% for d in kip_count %}
+                    {% if d.hazard == 'Disease Outbreak' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-receipt"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Forms</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
@@ -99,46 +142,60 @@
             <div class="col-md-6 col-lg-2 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-info text-center">
+                    {% for d in kip_count %}
+                    {% if d.hazard == 'Oil Spill' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-relative-scale"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Buttons</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
             <!-- Column -->
-            <div class="col-md-6 col-lg-2 col-xlg-3">
+            <div class="col-md-6 col-lg-4 col-xlg-3">
               <div class="card card-hover">
                 <div class="box bg-cyan text-center">
+                    {% for d in kip_count %}
+                    {% if d.hazard == 'Other' %}
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-pencil"></i>
+<!--                    <i class="mdi mdi-view-dashboard"></i>-->
+
+                    {{d.kcount}}
+
                   </h1>
-                  <h6 class="text-white">Elements</h6>
+                  <h6 class="text-white">{{d.hazard}}</h6>
+                  {% endif %}
+                    {% endfor %}
                 </div>
               </div>
             </div>
-            <!-- Column -->
-            <div class="col-md-6 col-lg-2 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-success text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-calendar-check"></i>
-                  </h1>
-                  <h6 class="text-white">Calnedar</h6>
-                </div>
-              </div>
-            </div>
-            <!-- Column -->
-            <div class="col-md-6 col-lg-2 col-xlg-3">
-              <div class="card card-hover">
-                <div class="box bg-warning text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-alert"></i>
-                  </h1>
-                  <h6 class="text-white">Errors</h6>
-                </div>
-              </div>
-            </div>
+<!--            &lt;!&ndash; Column &ndash;&gt;-->
+<!--            <div class="col-md-6 col-lg-2 col-xlg-3">-->
+<!--              <div class="card card-hover">-->
+<!--                <div class="box bg-success text-center">-->
+<!--                  <h1 class="font-light text-white">-->
+<!--                    <i class="mdi mdi-calendar-check"></i>-->
+<!--                  </h1>-->
+<!--                  <h6 class="text-white">Calnedar</h6>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Column &ndash;&gt;-->
+<!--            <div class="col-md-6 col-lg-2 col-xlg-3">-->
+<!--              <div class="card card-hover">-->
+<!--                <div class="box bg-warning text-center">-->
+<!--                  <h1 class="font-light text-white">-->
+<!--                    <i class="mdi mdi-alert"></i>-->
+<!--                  </h1>-->
+<!--                  <h6 class="text-white">Errors</h6>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
             <!-- Column -->
           </div>
 
@@ -149,18 +206,15 @@
                 <div class="card-body">
                   <div class="d-md-flex align-items-center">
                     <div>
-                      <h4 class="card-title">Site Analysis</h4>
-                      <h5 class="card-subtitle">Overview of Latest Month</h5>
+                      <h4 class="card-title">Hazard Analysis</h4>
+                      <h5 class="card-subtitle">Overview all the hazard</h5>
                     </div>
                   </div>
                   <div class="row">
                     <!-- column -->
                     <div class="col-lg-9">
                       <div class="flot-chart">
-                        <div
-                          class="flot-chart-content"
-                          id="flot-line-chart"
-                        ></div>
+                         <canvas id="myPieChart"></canvas>
                       </div>
                     </div>
                     <div class="col-lg-3">
@@ -227,5 +281,43 @@
 <!-- ============================================================== -->
 
 {% include 'footer.html' %}
+<script>
+<!--// Pie Chart Example-->
+var ctx = document.getElementById("myPieChart");
+var default_colors = ['#3366CC','#DC3912','#FF9900','#109618',
+'#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E',
+'#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300',
+'#8B0707','#329262','#5574A6','#3B3EAC']
+var myPieChart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: [{% for kc in kip_count %} '{{kc.hazard}}', {% endfor %}],
+    datasets: [{
+      data: [{% for kc in kip_count %} {{kc.kcount}}, {% endfor %}],
+      backgroundColor: default_colors,
+      hoverBackgroundColor: default_colors,
+      hoverBorderColor: "rgba(234, 236, 244, 1,1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
 
+
+</script>
 {% endblock %}
